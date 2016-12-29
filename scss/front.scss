@@ -1,0 +1,908 @@
+@import "bourbon/bourbon";
+
+/*================================================  
+    Author     : Wian Khaerul Amri
+    Document   : CSS
+    Framework  : SYNTHETIC CSS
+    VERSION    : V1.5.0
+==================================================*/
+
+// DECLARE GLOBAL VARIABLES
+$fontSizeDef: 14px;
+$colorDef: #333333;
+$fontFamily: 'OpenSans';
+$fontFamily2: '';
+$fontFamily3: '';
+$fontFamily4: '';
+$fontFamily5: '';
+
+
+$widthContainer: 1180px;
+$percentage : false;
+ 
+
+// DECLARE RESPONSIVE
+//RESPOSIVE ONLY IN MOBILE DEVICE : (-webkit-min-device-pixel-ratio: 2)
+//RESPOSIVE ONLY IN MOBILE DEVICE : (-webkit-min-device-pixel-ratio: 1)
+
+$mediaPhone: "only screen and (min-width:0px) and (max-width: 479px)";
+$mediaTablet: "only screen and (min-width: 480px) and (max-width: 1024px)";
+$mediaDesktop: "only screen and (min-width: 1025px)";
+
+
+// FUNCTION SET WIDTH CONTAINER
+@mixin widthContainer($width, $percentage){
+    @if $percentage == true {
+        width: 70%;
+    } @else {        
+        width: $width;
+    }
+}
+
+
+// FUNCTION GENERATE HEADING SIZE
+@mixin setHeadingSize($textHeading, $from, $to, $start, $decrease){    
+    $setSizeHeading: $textHeading !default;    
+    @for $i from $from through $to{
+        #{$setSizeHeading}#{$i}{
+            font-size: ($start + $decrease) - $i * $decrease; 
+        }
+    }
+}
+
+
+// FUNCTION GENERATE COLUMN
+@mixin setColumn($textColumn, $from, $to){
+    $setText: $textColumn !default;
+    @for $i from $from through $to {
+        $width: percentage(1) / 12 * $i;
+        
+        #{$setText}#{$i} {
+            width: $width;
+        }
+    }
+}
+
+// FUNCTION GENERATE MODULUS 2
+@mixin setModulus($textModulus, $from, $to, $property, $size){
+    $setText: $textModulus;
+    @for $i from $from through $to{
+        @if $i % 2 == 0{
+            #{$setText}#{$i}{
+                #{$property}: $i#{$size};
+            }
+        }
+    }
+}
+
+
+
+/*================================================
+=====================CSS RESET====================
+==================================================*/
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed, 
+figure, figcaption, footer, header, hgroup, 
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    font-size: 100%;
+    font: inherit;
+    vertical-align: baseline;
+}
+
+*{
+    margin: 0;
+    padding: 0;
+    outline-style: none;
+    
+    @include box-sizing(border-box);
+}
+
+body{
+    font-family: $fontFamily;
+    font-size: $fontSizeDef;
+    color: $colorDef;
+    font-weight: normal;
+}
+
+button {
+    cursor: pointer;
+    background: inherit;
+}
+
+input {
+    outline-style: none;
+}
+
+textarea {
+    outline-style: none;
+    resize: none;
+}
+
+input, select, textarea{
+    width: 100%;
+    padding: 8px 10px;
+    font-size: $fontSizeDef;
+    font-family: $fontFamily;
+    border: 1px solid #cccccc;
+}
+
+
+
+
+/*================================================
+===HTML5 DISPLAY-ROLE RESET FOR OLDER BROWSERS====
+==================================================*/
+article, aside, details, figcaption, figure, 
+footer, header, hgroup, menu, nav, section {
+    display: block;
+}
+
+ol, ul {
+    list-style: none;
+}
+
+blockquote, q {
+    quotes: none;
+}
+
+blockquote:before, blockquote:after,
+q:before, q:after {
+    content: '';
+    content: none;
+}
+
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+
+a{
+    outline-style: none;
+    color: inherit;
+}
+
+a:focus,
+a:hover,
+a:active,
+a:visited{
+    text-decoration: none;
+}
+
+:link, 
+:visited {
+    text-decoration: none;
+    outline-style: none;
+}
+
+
+
+/* ACTIVATE UL LI, OL LI, STRONG, ITALIC, BOLD, TABLE, U */
+/*
+ul,ol{
+    padding-left: 20px;
+    list-style: inherit;
+    
+    li{
+        margin: 0 0 8px;
+        list-style-position: outside;
+    }
+}
+
+strong, b{
+    font-weight: bold;
+}
+
+em, i{
+    font-style: italic;
+}
+
+u{
+    text-decoration: underline;
+}
+
+table{
+    border-collapse: collapse;
+    
+    td, th{
+        border-collapse: collapse;
+    }
+}
+*/
+
+
+
+/*================================================
+=================RESET FOR HEADING================
+==================================================*/
+h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6{
+    font-family: inherit;
+    color: inherit;    
+}
+@include setHeadingSize('h', 1, 6, 36px, 4px);
+@include setHeadingSize('.h', 1, 6, 36px, 4px);
+
+/*================================================
+====================SET COLUMN====================
+==================================================*/
+@include setColumn('.l-', 1, 12);
+
+
+/*================================================
+===============SET BODY(CONTAINER)================
+==================================================*/
+.container{
+    @include widthContainer($widthContainer, $percentage);
+    max-width: 100%;
+    position: relative;
+    margin: 0 auto;
+}
+
+.row{
+    margin-left: -15px;
+    margin-right: -15px;
+    
+    &:after{
+        content: "";
+        clear: both;
+        display: table;
+    }
+
+    &.inline{
+        display: block;
+        font-size: 0;
+    }
+
+    &.table{
+        display: table;
+        width: 100%;
+        margin: 0;
+        font-size: 0;
+    }
+
+    &.min-50{
+        margin-left: -50px;
+        margin-right: -50px;
+    }
+
+    &.min-45{
+        margin-left: -45px;
+        margin-right: -45px;
+    }
+
+    &.min-40{
+        margin-left: -40px;
+        margin-right: -40px;
+    }
+
+    &.min-35{
+        margin-left: -35px;
+        margin-right: -35px;
+    }
+
+    &.min-30{
+        margin-left: -30px;
+        margin-right: -30px;
+    }
+
+    &.min-25{
+        margin-left: -25px;
+        margin-right: -25px;
+    }
+
+    &.min-20{
+        margin-left: -20px;
+        margin-right: -20px;
+    }
+
+    &.min-10{
+        margin-left: -10px;
+        margin-right: -10px;
+    }
+
+    &.min-5{
+        margin-left: -5px;
+        margin-right: -5px;
+    }
+
+    &.min-0{
+        margin-left: 0;
+        margin-right: 0;
+    }
+
+    &.nomargin{
+        margin: 0;
+    }
+}
+
+.col{
+    position: relative;
+    padding-left: 15px;
+    padding-right: 15px;
+
+    &.float{
+        float: left;
+    }
+
+    &.inline{
+        display: inline-block;
+        font-size: $fontSizeDef;
+        vertical-align: top;
+        
+        &.verti-middle{
+            vertical-align: middle;
+        }
+
+        &.verti-top{
+            vertical-align: top;
+        }
+
+        &.verti-bottom{
+            vertical-align: bottom;
+        }
+    }
+
+    &.table{
+        display: table-cell;
+        font-size: $fontSizeDef;
+        
+        &.verti-middle{
+            vertical-align: middle;
+        }
+
+        &.verti-top{
+            vertical-align: top;
+        }
+
+        &.verti-bottom{
+            vertical-align: bottom;
+        }
+    }
+
+    &.min-50{
+        padding-left: 50px;
+        padding-right: 50px;
+    }
+
+    &.min-45{
+        padding-left: 45px;
+        padding-right: 45px;
+    }
+
+    &.min-40{
+        padding-left: 40px;
+        padding-right: 40px;
+    }
+
+    &.min-35{
+        padding-left: 35px;
+        padding-right: 35px;
+    }
+    
+    &.min-30{
+        padding-left: 30px;
+        padding-right: 30px;
+    }
+
+    &.min-25{
+        padding-left: 25px;
+        padding-right: 25px;
+    }
+    
+    &.min-20{
+        padding-left: 20px;
+        padding-right: 20px;
+    }
+
+    &.min-10{
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+
+    &.min-5{
+        padding-left: 5px;
+        padding-right: 5px;
+    }
+
+    &.min-0{
+        padding-left: 0;
+        padding-right: 0;
+    }
+}
+
+
+.form-group{
+    margin: 0 -5px;
+    position: relative;
+    
+    &:after{
+        content: "";
+        clear: both;
+        display: table;
+    }
+
+    .form-oneline{
+        position: relative;
+        display: block;
+        padding: 0 5px;
+        margin: 0 0 10px;
+        
+        label{
+            margin: 0 0 5px;
+            display: block;
+        }
+    }
+
+    .form-inline{
+        position: relative;
+        float: left;
+        padding: 0 5px;
+        margin: 0 0 10px;
+        
+        .float{
+            float: left;
+        }
+        
+        label{
+            margin: 0 0 5px;
+            display: block;
+        }
+    }    
+    
+    .checkbox{
+        @extend .radio;
+    }
+    
+    .checkbox-inline{
+        @extend .radio-inline;
+    }
+
+    .radio{
+        position: relative;
+        
+        &:after{
+            content: '';
+            clear: both;
+            display: table;
+        }
+        
+        label{
+            padding-left: 20px;
+            cursor: pointer;
+            line-height: 1;
+            display: inline-block;
+        }
+
+        input[type=checkbox],
+        input[type=radio]{
+            position: absolute;
+            left: 0;
+            width: auto;
+        }
+    }
+
+    .radio-inline{
+        position: relative;
+        float: left;
+        margin: 0 10px 0 0;
+        
+        &:after{
+            content: '';
+            clear: both;
+            display: table;
+        }
+
+        label{
+            cursor: pointer;
+            line-height: 1;
+            display: inline-block;
+        }
+
+        input[type=checkbox],
+        input[type=radio]{
+            position: relative;
+            left: 0;
+            width: auto;
+        }
+    }
+}
+
+.btn-default{
+    padding: 8px 20px;
+    border: 1px solid #ddd;
+    background: #f2f2f2;
+    
+    @include transition-duration(0.3s);
+    
+    &.uppercase{
+        text-transform: uppercase;
+    }
+
+    &.block{
+        display: block;
+        width: 100%;
+    }
+}
+
+.card{
+    @extend .depth-1;
+    
+    &.radius{
+        @include border-top-radius(2px);
+        @include border-right-radius(2px);
+        @include border-bottom-radius(2px);
+        @include border-left-radius(2px);
+    }
+}
+
+.btn-m{
+    @extend .depth-1;
+    
+    &.radius{
+        @include border-top-radius(2px);
+        @include border-right-radius(2px);
+        @include border-bottom-radius(2px);
+        @include border-left-radius(2px);
+    }
+}
+
+
+.depth-0{
+    box-shadow: none !important
+}
+
+.depth-1{
+    box-shadow: 0 2px 3px 0 rgba(0, 0, 0, 0.16), 0 2px 8px 0 rgba(0, 0, 0, 0.12);
+}
+
+.depth-2{
+    box-shadow: 0 8px 17px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
+}
+
+.depth-3{
+    box-shadow: 0 12px 15px 0 rgba(0,0,0,0.24),0 17px 50px 0 rgba(0,0,0,0.19);
+}
+
+.depth-4{
+    box-shadow: 0 16px 28px 0 rgba(0,0,0,0.22),0 25px 55px 0 rgba(0,0,0,0.21);
+}
+
+.depth-5{
+    box-shadow: 0 27px 24px 0 rgba(0,0,0,0.2),0 40px 77px 0 rgba(0,0,0,0.22);
+}
+
+
+/*================================================
+====================FONT AWESOME==================
+==================================================*/
+@import "font-awesome/variables";
+@import "font-awesome/mixins"; 
+@import "font-awesome/path";
+@import "font-awesome/core";
+@import "font-awesome/larger"; 
+@import "font-awesome/fixed-width";
+@import "font-awesome/list";
+@import "font-awesome/bordered-pulled";
+@import "font-awesome/animated";
+@import "font-awesome/rotated-flipped";
+@import "font-awesome/stacked";
+@import "font-awesome/icons";  
+@import "font-awesome/screen-reader"; 
+
+
+/*================================================
+====================WAVES BUTTON==================
+==================================================*/
+@import "waves/waves";
+ 
+
+
+/*================================================================================================================================================================================================
+========================================================================================ALL STYLE=================================================================================================
+==================================================================================================================================================================================================*/
+@import "all_style";
+/*================================================================================================================================================================================================
+========================================================================================END ALL STYLE=============================================================================================
+==================================================================================================================================================================================================*/
+
+
+
+
+/*================================================
+===============FUNCTION CLASS GLOBAL==============
+==================================================*/
+.clear{
+    &:after{
+        content: "";
+        clear: both;    
+        display: table;
+    }
+}
+
+.no-margin{
+    margin: 0;
+}
+
+.no-margin-top{
+    margin-top: 0;
+}
+
+.no-margin-bottom{
+    margin-bottom: 0;
+}
+
+.no-margin-right{
+    margin-right: 0;
+}
+
+.no-margin-left{
+    margin-left: 0;
+}
+
+.no-padding{
+    padding: 0;
+}
+
+.no-padding-top{
+    padding-top: 0;
+}
+
+.no-padding-bottom{
+    padding-bottom: 0;
+}
+
+.no-padding-right{
+    padding-right: 0;
+}
+
+.no-padding-left{
+    padding-left: 0;
+}
+
+.text-left{
+    text-align: left;
+}
+
+.text-center{
+    text-align: center;
+}
+
+.text-right{
+    text-align: right;
+}
+
+.text-justify{
+    text-align: justify;
+}
+
+.text-underline{
+    text-decoration: underline;
+}
+
+.text-uppercase{
+    text-transform: uppercase;
+}
+
+.text-lowercase{
+    text-transform: lowercase;
+}
+
+.text-capitalize{
+    text-transform: capitalize;
+}
+
+.text-strong{
+    font-weight: bold;
+}
+
+.text-italic{
+    font-style: italic;
+}
+
+// DISPLAY
+.display-block{
+    display: block;
+}
+
+.display-inline{
+    display: inline;
+}
+
+.display-inline-block{
+    display: inline-block;
+}
+
+.display-none{
+    display: none;
+}
+
+.display-table{
+    display: table;
+}
+
+
+// FLOAT
+.float-right{
+    float: right;
+}
+
+.float-left{
+    float: left;
+}
+
+.float-none{
+    float: none;
+}
+
+
+// FONT
+.font-0{
+    font-size: 0;
+}
+
+@include setModulus('.font-', 14, 36, 'font-size', 'px'); 
+
+
+.font-italic{
+    font-style: italic;
+}
+
+.font-bold{
+    font-weight: bold;
+}
+
+
+// VERTICAL ALIGN
+.vertical-top{
+    vertical-align: top;
+}
+
+.vertical-middle{
+    vertical-align: middle;
+}
+
+.vertical-bottom{
+    vertical-align: bottom;
+}
+
+
+
+
+
+/*================================================
+====================MEDIA QUERIES=================
+==================================================*/
+
+
+/*====================DESKTOP=================*/
+@media #{$mediaDesktop}{    
+    @import "mobile_desktop.scss";
+}
+
+/*====================TABLET=================*/
+@media #{$mediaTablet}{
+    .container{
+        width: 100%;
+        padding: 0 15px;
+    }
+
+    .row{
+        &.table{
+            display: block;
+        }
+
+        &.min-5,
+        &.min-10,
+        &.min-20,
+        &.min-25,
+        &.min-30,
+        &.min-35,
+        &.min-40,
+        &.min-45,
+        &.min-50{
+            margin-left: -15px;
+            margin-right: -15px;
+        }
+    }
+
+    .col{
+
+        &.table{
+            display: inline-block;
+        }
+
+        &.min-5,
+        &.min-10,
+        &.min-20,
+        &.min-25,
+        &.min-30,
+        &.min-35,
+        &.min-40,
+        &.min-45,
+        &.min-50{
+            padding-left: 15px;
+            padding-right: 15px;
+        }
+    }
+
+    @include setColumn('.m-', 1, 12);
+
+    @include setModulus('.font-', 14, 28, 'font-size', 'px'); 
+
+
+    @import "mobile_tablet.scss";
+
+}
+
+/*====================PHONE=================*/
+@media #{$mediaPhone} {
+    .container{
+        width: 100%;
+        padding: 0 15px;
+    }
+    
+    @include setColumn('.s-', 1, 12);
+    
+    .row{
+        &.table{
+            display: block;
+        }
+
+        &.min-5,
+        &.min-10,
+        &.min-20,
+        &.min-25,
+        &.min-30,
+        &.min-35,
+        &.min-40,
+        &.min-45,
+        &.min-50{
+            margin-left: -15px;
+            margin-right: -15px;
+        }
+    }
+
+    .col{
+        &.table{
+            display: block;
+            vertical-align: top;
+        }
+
+        &.min-5,
+        &.min-10,
+        &.min-20,
+        &.min-25,
+        &.min-30,
+        &.min-35,
+        &.min-40,
+        &.min-45,
+        &.min-50{
+            padding-left: 15px;
+            padding-right: 15px;
+        }
+    }
+
+    @include setModulus('.font-', 14, 28, 'font-size', 'px'); 
+
+    .btn-default{
+        display: block;
+        width: 100%;
+    }
+    
+
+    @import "mobile_phone.scss";
+
+}
+
+

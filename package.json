@@ -1,0 +1,10 @@
+{
+  "name": "SYNTHETIC_CSS",
+  "version": "0.0.1",
+  "description": "SYNTHETIC_CSS",
+  "author": "Wian Khaerul A.",
+  "license": "MIT",
+  "devDependencies": {
+    "grunt-cssbeautifier": "^0.1.2"
+  }
+}
